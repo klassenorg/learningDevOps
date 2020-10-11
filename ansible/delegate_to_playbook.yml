@@ -1,0 +1,47 @@
+---
+- name: delegate_to_playbook
+  hosts: all
+  become: yes
+
+  vars: 
+    myText: "Hello, world!"
+
+  tasks: 
+  - name: Ping test
+    ping:
+
+  - name: Unregister Server from Balancer
+    shell: touch /tmp/balansing.off && echo This server {{ inventory_hostname }} was out from balance, node name is {{ ansible_nodename }} >> /home/log.txt
+    delegate_to: 127.0.0.1
+
+  - name: Create file1
+    copy:
+      dest: ~/file1.txt
+      content: |
+        This if file1 from delegate to exercise
+        You say hello Arthur,
+        I'm say {{ myText }}
+    delegate_to: linux1
+
+
+  - name: Create file2
+    copy:
+      dest: ~/file2.txt
+      content: |
+        This if file2 from delegate to exercise
+        You say hello Arthur,
+        I'm say {{ myText }}
+
+  - name: Reboot servers
+    shell: sleep 3 && reboot now
+    async: 1
+    poll: 0
+  
+  - name: Wait till servers up
+    wait_for: 
+      host: "{{ inventory_hostname }}"
+      state: started
+      delay: 5
+      timeout: 100
+    delegate_to: 127.0.0.1
+

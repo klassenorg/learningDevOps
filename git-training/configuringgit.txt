@@ -1,0 +1,9 @@
+git config --global user.name "Arthur Klassen"
+git config --global user.email "klassenorg@gmail.com
+
+#to show config:
+git config -l
+
+#paths:
+#linux: ~/.gitconfig
+#Windows: C:\Users\username\.gitconfing

@@ -1,0 +1,9 @@
+---
+
+- name: Using roles instal apache
+  hosts: "{{ MYHOSTS }}"
+  become: yes
+
+  roles:
+    - { role: deploy_apache_and_site, when: ansible_system == 'Linux' }
+

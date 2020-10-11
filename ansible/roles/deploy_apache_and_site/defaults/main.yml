@@ -1,0 +1,3 @@
+---
+# defaults file for deploy_apache_and_site
+dest_folder: /var/www/html

@@ -1,0 +1,43 @@
+---
+#ansible-vault create passwords.txt 
+#to create encrypted file
+#or
+#ansible-vault encrypt somefile.txt
+#to encrypt existing file
+
+- name: vault playbook
+  hosts: all
+  become: yes
+
+#ansible-vault encrypt_string
+# or
+#echo -n "Pa$sW0rd" | ansible-vault encrypt_string
+
+  vars: 
+    admin_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          31646363383532323336616331623262376266396330303061646336303530373230343131383530
+          3030373632323939633635393633356134353236663961380a353135373231323232346261633062
+          38636361353235363034383831626139366236353131653233383366376134626564623164336532
+          6237663966616232320a666630373035623031383631303937346237656637623934653230613233
+          3162
+
+#--ask-vault-pass
+#or 
+#--vault-password-file file
+
+  tasks:
+    - name: install package tree
+      yum:
+        name: tree
+        state: latest
+
+    - name: Create cfg file
+      copy: 
+        dest: ~/file.cfg
+        content: |
+          port = 8080
+          log = 8
+          home = ~
+          user = admin
+          password = {{ admin_password }} 

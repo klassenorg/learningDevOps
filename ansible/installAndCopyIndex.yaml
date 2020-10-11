@@ -1,0 +1,46 @@
+---
+- name: Install httpd
+  hosts: all
+  become: yes
+
+  vars:
+    src_var:  ./htmlpage/index.html
+    dest_var: /var/www/html
+
+  tasks:
+  - name: Check and print Linux version
+    debug: var=ansible_os_family
+
+  - block: # Block for RedHat
+
+    - name: Install httpd for RedHat
+      yum: name=httpd state=latest
+
+    - name: Start httpd and enable autostart for RedHat
+      service: name=httpd state=started enabled=yes
+
+    - name: Copy index HTTPD
+      copy: src={{ src_var }} dest={{ dest_var }} mode=0555
+      notify: Restart HTTPD RedHat
+    when: ansible_os_family == "RedHat"
+
+  - block: # Block for Debian
+    - name: Install apache2 for Debian
+      apt: name=apache2 state=latest
+
+    - name: Start apache2 and enable autostart for Debian
+      service: name=apache2 state=started enabled=yes
+
+    - name: Copy index Apache2
+      copy: src={{ src_var }} dest={{ dest_var }} mode=0555
+      notify: Restart apache2 Debian
+    when: ansible_os_family == "Debian"
+
+  handlers:
+  - name: Restart HTTPD RedHat
+    service: name=httpd state=restarted
+
+  - name: Restart apache2 Debian
+    service: name=apache2 state=restarted
+
+

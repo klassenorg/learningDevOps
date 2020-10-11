@@ -1,0 +1,9 @@
+#show all commits
+git log
+
+#show x last commits
+#where x is number of commits
+git log -5
+
+#show difference in files
+git log -1 -p

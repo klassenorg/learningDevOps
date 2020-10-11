@@ -1,0 +1,6 @@
+#file:
+idontwantthisfile.txt
+#pattern: 
+*.log
+#folder
+idontwantthisfolder

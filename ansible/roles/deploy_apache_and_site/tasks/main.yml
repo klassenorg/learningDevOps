@@ -1,0 +1,42 @@
+---
+# tasks file for deploy_apache_and_site
+- name: Check and print Linux version
+  debug: var=ansible_os_family
+
+- block: # Block for RedHat
+
+  - name: Install httpd for RedHat
+    yum: name=httpd state=latest
+
+  - name: Start httpd and enable autostart for RedHat
+    service: name=httpd state=started enabled=yes
+  when: ansible_os_family == "RedHat"
+
+- block: # Block for Debian
+  - name: Install apache2 for Debian
+    apt: name=apache2 state=latest
+
+  - name: Start apache2 and enable autostart for Debian
+    service: name=apache2 state=started enabled=yes
+  when: ansible_os_family == "Debian"
+
+- name: Generate index.html from index.j2
+  template: src=index.j2 dest={{ dest_folder }}/index.html mode=0555
+  notify:
+    - Restart HTTPD RedHat
+    - Restart apache2 Debian
+
+- name: Copy HomePage to var/www/html
+  copy: src={{ item }} dest={{ dest_folder }} mode=0555
+  with_fileglob: "*.png"
+#  loop:
+#    - "index.html"
+#    - "Australia.png"
+#    - "Canada.png"
+#    - "Russia.png"
+#    - "Ukraine.png"
+  notify:
+    - Restart HTTPD RedHat
+    - Restart apache2 Debian
+
+

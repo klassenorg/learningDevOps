@@ -1,0 +1,22 @@
+---
+- name: ansible error handling
+  hosts: all
+  become: yes
+  any_errors_fatal: true
+
+  tasks:
+    - name: task1
+      yum: name=treeeeee state=latest
+      ignore_errors: yes
+
+    - name: task2
+      shell: cat /home/ec2-user/myfile.txt
+      register: results
+      
+
+    - debug: 
+        var: results
+      
+
+    - name: taks3
+      shell: echo privet mir

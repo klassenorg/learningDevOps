@@ -1,0 +1,17 @@
+#in current folder
+git init .
+#in some folder
+git init /some/folder
+
+#get status
+git status
+
+#add files to git project or add updated files
+git add somefile
+#or 
+git add .
+#to add all files in dir
+
+
+#commit files
+git commit -m "Some message"
