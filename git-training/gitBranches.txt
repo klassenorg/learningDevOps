@@ -8,7 +8,7 @@ git branch branch_name
 git checkout branch_name
 
 #switch to master
-git checkout master
+git checkout main
 
 #delete branch
 git branch -d branch_name
