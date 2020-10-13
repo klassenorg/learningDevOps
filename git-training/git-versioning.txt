@@ -2,4 +2,6 @@
 git checkout *hash*
 
 
-some text
+#back to latest 
+git checkout master
+
