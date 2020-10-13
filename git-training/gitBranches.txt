@@ -10,6 +10,9 @@ git checkout branch_name
 #switch to master
 git checkout main
 
+#or use git switch instead of git checkout
+git switch main
+
 #delete branch
 git branch -d branch_name
 
