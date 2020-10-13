@@ -5,3 +5,6 @@ git checkout *hash*
 #back to latest 
 git checkout master
 
+#edit latest commit message
+git commit --amend
+
