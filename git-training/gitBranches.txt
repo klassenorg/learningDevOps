@@ -13,6 +13,9 @@ git checkout main
 #delete branch
 git branch -d branch_name
 
-#create batch and switch now
+#create branch and switch now
 git checkout -b branch_name
 
+#merge:
+#first switch to main branch, and then
+git merge branch_name
