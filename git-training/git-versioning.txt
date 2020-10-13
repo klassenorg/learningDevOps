@@ -1,2 +1,5 @@
 #get commit hash from git log, then
 git checkout *hash*
+
+#back to latest 
+git checkout master
