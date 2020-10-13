@@ -2,3 +2,8 @@
 git branch
 
 
+#add branch 
+git branch branch_name
+
+
+
