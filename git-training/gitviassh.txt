@@ -1,0 +1,3 @@
+#change link to ssh
+git remote set-url git@github.com:klassenorg/learningDevOps.git
+
